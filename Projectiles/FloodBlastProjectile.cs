@@ -85,7 +85,7 @@ namespace PrimordialSands.Projectiles
                     Main.dust[num997].noGravity = true;
                     Main.dust[num997].position = projectile.Center + spinningpoint * scaleFactor2 + value3;
                     Main.dust[num997].velocity = Vector2.Zero;
-                    Main.dust[num997].scale = 1f;
+                    Main.dust[num997].scale = 0.75f;
                     num = num996;
                 }
             }

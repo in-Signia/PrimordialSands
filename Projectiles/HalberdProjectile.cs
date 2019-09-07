@@ -18,59 +18,64 @@ namespace PrimordialSands.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 24;
-            projectile.height = 24;
-            projectile.aiStyle = 19;
+            projectile.width = 140;
+            projectile.height = 140;
+            projectile.aiStyle = -1;
             projectile.penetrate = -1;
             projectile.alpha = 0;
-
             projectile.hide = true;
             projectile.ownerHitCheck = true;
             projectile.melee = true;
             projectile.tileCollide = false;
             projectile.friendly = true;
         }
-        public float movementFactor
+        public override void AI() //Programmed by KittyKitCatCat, now owned by inSignia
         {
-            get { return projectile.ai[0]; }
-            set { projectile.ai[0] = value; }
-        }
-
-        public override void AI()
-        {
-            Player projOwner = Main.player[projectile.owner];
-            Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
-            projectile.direction = projOwner.direction;
-            projOwner.heldProj = projectile.whoAmI;
-            projOwner.itemTime = projOwner.itemAnimation;
-            projectile.position.X = ownerMountedCenter.X - (float)(projectile.width / 2);
-            projectile.position.Y = ownerMountedCenter.Y - (float)(projectile.height / 2);
-            if (!projOwner.frozen)
-            {
-                if (movementFactor == 0f)
-                {
-                    movementFactor = 3f;
-                    projectile.netUpdate = true;
-                }
-                if (projOwner.itemAnimation < projOwner.itemAnimationMax / 3)
-                {
-                    movementFactor -= 2.4f;
-                }
-                else
-                {
-                    movementFactor += 2.1f;
-                }
-            }
-            if (projOwner.itemAnimation == 0)
+            Player player = Main.player[projectile.owner];
+            Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
+            projectile.direction = player.direction;
+            player.heldProj = projectile.whoAmI;
+            projectile.Center = vector;
+            if (player.dead)
             {
                 projectile.Kill();
+                return;
             }
-            projectile.position += projectile.velocity * movementFactor;
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
-            if (projectile.spriteDirection == -1)
+            if (!player.frozen)
             {
-                projectile.rotation -= MathHelper.ToRadians(90f);
-            }           
+                projectile.spriteDirection = (projectile.direction = player.direction);
+                projectile.alpha -= 127;
+                if (projectile.alpha < 0)
+                {
+                    projectile.alpha = 0;
+                }
+                if (projectile.localAI[0] > 0f)
+                {
+                    projectile.localAI[0] -= 1f;
+                }
+                float num = (float)player.itemAnimation / (float)player.itemAnimationMax;
+                float num2 = 9f - num;
+                float num3 = projectile.velocity.ToRotation();
+                float num4 = projectile.velocity.Length();
+                float num5 = 22f;
+                Vector2 value = new Vector2(1f, 0f).RotatedBy((double)(3.14159274f + num2 * 6.28318548f), default(Vector2));
+                Vector2 spinningpoint = value * new Vector2(num4, projectile.ai[0]);
+                projectile.position += spinningpoint.RotatedBy((double)num3, default(Vector2)) + new Vector2(num4 + num5, 0f).RotatedBy((double)num3, default(Vector2));
+                Vector2 destination = vector + spinningpoint.RotatedBy((double)num3, default(Vector2)) + new Vector2(num4 + num5 + 40f, 0f).RotatedBy((double)num3, default(Vector2));
+                projectile.rotation = player.AngleTo(destination) + 0.7853982f * (float)player.direction;
+                if (projectile.spriteDirection == -1)
+                {
+                    projectile.rotation += 3.14159274f;
+                }
+                player.DirectionTo(projectile.Center);
+                Vector2 value2 = player.DirectionTo(destination);
+                Vector2 vector2 = projectile.velocity.SafeNormalize(Vector2.UnitY);
+            }
+            if (player.itemAnimation == 2)
+            {
+                projectile.Kill();
+                player.reuseDelay = 2;
+            }
         }
     }
 }

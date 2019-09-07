@@ -30,7 +30,15 @@ namespace PrimordialSands.Projectiles
         }
         public override void AI()
         {
-            projectile.position.Y = Main.mouseY + Main.screenPosition.Y;
+            if (projectile.ai[0] == 0)
+            {
+                projectile.position.Y = Main.mouseY + Main.screenPosition.Y;
+                projectile.ai[1] += 1;
+            }
+            if (projectile.ai[1] == 200)
+            {
+                projectile.position.Y = projectile.oldPosition.Y;
+            }
         }
     }
 }

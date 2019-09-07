@@ -6,8 +6,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.DataStructures;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.GameContent.UI;
 
 using System;
@@ -30,11 +28,13 @@ namespace PrimordialSands.NPCs
         }
 
         public bool flood = false;
+        public bool plague = false;
         public bool splintered = false;
 
         public override void ResetEffects(NPC npc)
         {
             flood = false;
+            plague = false;
             splintered = false;
         }
 
@@ -50,6 +50,18 @@ namespace PrimordialSands.NPCs
                 if (damage < 3)
                 {
                     damage = 3;
+                }
+            }
+            if (plague)
+            {
+                if (npc.lifeRegen > 0)
+                {
+                    npc.lifeRegen = 0;
+                }
+                npc.lifeRegen -= 6;
+                if (damage < 1)
+                {
+                    damage = 1;
                 }
             }
             if (splintered)
@@ -69,6 +81,16 @@ namespace PrimordialSands.NPCs
                     Main.dust[dust].noGravity = true;
                 }
                 Lighting.AddLight(npc.position, 0f, 0.25f, 0f);
+            }
+            if (plague)
+            {
+                if (Main.rand.Next(4) < 3)
+                {
+                    int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 256, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1f);
+                    Main.dust[dust].scale = 0.45f;
+                    Main.dust[dust].noGravity = true;
+                }
+                Lighting.AddLight(npc.position, 0f, 0.567f, 0f);
             }
             if (splintered)
             {

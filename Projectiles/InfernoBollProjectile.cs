@@ -20,7 +20,7 @@ namespace PrimordialSands.Projectiles
         {
             projectile.width = 6;
             projectile.height = 6;
-            projectile.penetrate = 3;
+            projectile.penetrate = 1;
             projectile.aiStyle = 8;
             projectile.timeLeft = 300;
             projectile.magic = true;
@@ -37,7 +37,7 @@ namespace PrimordialSands.Projectiles
             int num3;
             if (Main.myPlayer == projectile.owner)
             {
-                for (int num350 = 0; num350 < 6; num350 = num3 + 1)
+                for (int num350 = 0; num350 < 2; num350 = num3 + 1)
                 {
                     float num351 = -projectile.velocity.X * (float)Main.rand.Next(20, 50) * 0.01f + (float)Main.rand.Next(-20, 21) * 0.4f;
                     float num352 = -Math.Abs(projectile.velocity.Y) * (float)Main.rand.Next(30, 50) * 0.01f + (float)Main.rand.Next(-20, 5) * 0.4f;

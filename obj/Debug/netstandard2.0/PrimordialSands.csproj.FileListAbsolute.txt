@@ -1,0 +1,4 @@
+C:\Users\cobal\Documents\My Games\Terraria\ModLoader\Mod Sources\PrimordialSands\obj\Debug\netstandard2.0\PrimordialSands.csprojAssemblyReference.cache
+C:\Users\cobal\Documents\My Games\Terraria\ModLoader\Mod Sources\PrimordialSands\obj\Debug\netstandard2.0\PrimordialSands.csproj.CoreCompileInputs.cache
+C:\Users\cobal\Documents\My Games\Terraria\ModLoader\Mod Sources\PrimordialSands\obj\Debug\netstandard2.0\PrimordialSands.AssemblyInfoInputs.cache
+C:\Users\cobal\Documents\My Games\Terraria\ModLoader\Mod Sources\PrimordialSands\obj\Debug\netstandard2.0\PrimordialSands.AssemblyInfo.cs
